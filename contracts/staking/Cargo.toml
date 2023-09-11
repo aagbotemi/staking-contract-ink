@@ -1,0 +1,47 @@
+[package]
+name = "staking_contract"
+version = "0.1.0"
+authors = ["[your_name] <[your_email]>"]
+edition = "2021"
+
+[dependencies]
+ink = { version = "4.3.0", default-features = false }
+
+scale = { package = "parity-scale-codec", version = "3", default-features = false, features = [
+    "derive",
+] }
+scale-info = { version = "2.6", default-features = false, features = [
+    "derive",
+], optional = true }
+openbrush = { tag = "4.0.0-beta.1", git = "https://github.com/Brushfam/openbrush-contracts", default-features = false, features = [
+    "psp22",
+] }
+staking_app = { path = "../../contract_implementations", default-features = false, features = [
+    "staking",
+] }
+
+
+[dev-dependencies]
+ink_e2e = "4.3.0"
+
+[lib]
+name = "staking_contract"
+path = "lib.rs"
+psp22_token = { path = "../psp22", version = "0.1.0", default-features = false, features = [
+    "ink-as-dependency",
+] }
+
+[features]
+default = ["std"]
+std = [
+    "ink/std",
+    "scale/std",
+    "scale-info/std",
+    "openbrush/std",
+    "staking_app/std",
+]
+ink-as-dependency = []
+e2e-tests = []
+
+[profile.release]
+overflow-checks = false
